@@ -4,6 +4,7 @@ import { colors } from "../../../utils/colors";
 const InfoStyled = styled.section`
   width: 100%;
   padding: 0 16px;
+  margin-bottom: 50px;
 
   .info_title {
     margin-bottom: 20px;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Header } from "../components/header/Header";
 import { Video } from "../components/video/Video";
 import { Info } from "../components/info/Info";
+import { BoothList } from "../components/booth/BoothList";
 
 import { infoContent } from "../api/fakecontent";
 
@@ -16,6 +17,8 @@ export const Main = () => {
       <Video />
 
       <Info content={infoContent} />
+
+      <BoothList />
     </MainStyled>
   );
 };

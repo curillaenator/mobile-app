@@ -7,6 +7,7 @@ import { App } from "./app/App";
 
 import { store } from "./redux/store";
 
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./index.css";
 
 ReactDOM.render(
