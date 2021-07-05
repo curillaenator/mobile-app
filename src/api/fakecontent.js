@@ -1,4 +1,6 @@
-import { colors } from "../../utils/colors";
+import { colors } from "../utils/colors";
+
+// import photo from "../../assets/images/photo.jpg";
 
 export const infoContent = {
   title: (
@@ -120,3 +122,24 @@ export const infoContent = {
     },
   ],
 };
+
+// export const boothList = [
+//   {
+//     id: "booth1",
+//     title: "Фотобудка с ширмой",
+//     size: "2м x 1.5м x 2 м",
+//     photos: [photo, photo, photo],
+//     otions: ["1", "2"],
+//     price: 17000,
+//   },
+//   {
+//     id: "booth2",
+//     title: "Фотобудка с ширмой",
+//     size: "2м x 1.5м x 2 м",
+//     photos: [photo, photo, photo],
+//     otions: ["1", "2"],
+//     price: 17000,
+//   },
+// ];
+
+

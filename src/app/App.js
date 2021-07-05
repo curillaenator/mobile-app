@@ -7,6 +7,7 @@ const AppStyled = styled.div`
   min-width: 320px;
   max-width: 375px;
   margin: 0 auto;
+  overflow: hidden;
 `;
 
 export const App = () => {
