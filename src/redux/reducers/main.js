@@ -2,11 +2,13 @@ import { batch } from "react-redux";
 import { fakeApi } from "../../api/fakeApi";
 
 const SET_INIT = "main/SET_INIT";
-const SET_BOOTHLIST = "main/SET_BOOTHLIST";
+const SET_CARDLIST = "main/SET_BOOTHLIST";
+const SET_ORDER = "main/SET_ORDER";
 
 const initialState = {
   isInit: false,
-  boothList: null,
+  cardList: null,
+  order: null,
 };
 
 export const main = (state = initialState, action) => {
@@ -14,8 +16,11 @@ export const main = (state = initialState, action) => {
     case SET_INIT:
       return { ...state, isInit: action.payload };
 
-    case SET_BOOTHLIST:
-      return { ...state, boothList: action.payload };
+    case SET_CARDLIST:
+      return { ...state, cardList: action.payload };
+
+    case SET_ORDER:
+      return { ...state, order: action.payload };
 
     default:
       return state;
@@ -25,15 +30,20 @@ export const main = (state = initialState, action) => {
 // ACTION CREATORS
 
 const setInit = (payload) => ({ type: SET_INIT, payload });
-const setBoothList = (payload) => ({ type: SET_BOOTHLIST, payload });
+const setCardList = (payload) => ({ type: SET_CARDLIST, payload });
+const setOrder = (payload) => ({ type: SET_ORDER, payload });
 
 // THUNKS
 
 export const getInitial = () => async (dispatch) => {
-  const boothList = await fakeApi.getBoothList();
+  const cardList = await fakeApi.getBoothList();
 
   batch(() => {
-    dispatch(setBoothList(boothList));
+    dispatch(setCardList(cardList));
     dispatch(setInit(true));
   });
+};
+
+export const getOrder = () => (dispatch, getState) => {
+  const cardList = getState().main.cardList;
 };

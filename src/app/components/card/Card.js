@@ -10,35 +10,41 @@ import { icons } from "../../../utils/icons";
 
 // ---- BOOTH STATE ----
 
-const SET_OPTIONS = "booth/SET_OPTIONS";
+const SET_OPTIDS = "booth/SET_OPTIONS";
+const SET_OPT_PRICE = "booth/SET_OPT_PRICE";
 const SET_RENT = "booth/SET_RENT";
-const SET_PRICE = "booth/SET_PRICE";
+const SET_RENT_PRICE = "booth/SET_RENT_PRICE";
 
 const initialState = {
-  options: [],
+  optIDs: [],
+  optPrice: 0,
   rent: null,
-  price: null,
+  rentPrice: 0,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case SET_OPTIONS:
-      return { ...state, options: action.payload };
+    case SET_OPTIDS:
+      return { ...state, optIDs: action.payload };
+
+    case SET_OPT_PRICE:
+      return { ...state, optPrice: action.payload };
 
     case SET_RENT:
       return { ...state, rent: action.payload };
 
-    case SET_PRICE:
-      return { ...state, price: action.payload };
+    case SET_RENT_PRICE:
+      return { ...state, rentPrice: action.payload };
 
     default:
       return state;
   }
 };
 
-const setOptions = (payload) => ({ type: SET_OPTIONS, payload });
+const setOptions = (payload) => ({ type: SET_OPTIDS, payload });
+const setOptionsPrice = (payload) => ({ type: SET_OPT_PRICE, payload });
 const setRent = (payload) => ({ type: SET_RENT, payload });
-const setPrice = (payload) => ({ type: SET_PRICE, payload });
+const setRentPrice = (payload) => ({ type: SET_RENT_PRICE, payload });
 
 // ---- BOOTH COMPONENT ----
 
@@ -124,7 +130,7 @@ const RentOptionStyled = styled.div`
   user-select: none;
 `;
 
-const BoothStyled = styled.div`
+const CardStyled = styled.div`
   margin-bottom: 30px;
   padding: 16px 16px 18px 16px;
   box-shadow: 0 4px 20px ${colors.shadow};
@@ -221,54 +227,66 @@ const optionsThumb = ({ style, ...props }) => {
 };
 
 // main component
-export const Booth = ({ booth }) => {
+export const Card = ({ card }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => dispatch(setPrice(booth.price)), [booth.price]);
+  useEffect(() => {
+    const initialPrice = card.rent[0].priceQ * +card.price;
+    dispatch(setRent(card.rent[0].id));
+    dispatch(setRentPrice(initialPrice));
+  }, [card]);
 
-  const handleOption = (id) => {
-    const options = [...state.options];
-    const optionPrice = booth.options.find((opt) => opt.id === id).price;
-    const total = state.price;
+  const handleOption = (option) => {
+    const { id, price } = option;
 
-    if (options.includes(id)) {
-      const updTotal = +total - optionPrice;
-      dispatch(setOptions(options.filter((opt) => opt !== id)));
-      dispatch(setPrice(updTotal));
+    if (state.optIDs.includes(id)) {
+      const optPriceUpd = +state.optPrice - price;
+
+      dispatch(setOptions(state.optIDs.filter((optID) => optID !== id)));
+      dispatch(setOptionsPrice(optPriceUpd));
+
       return;
     }
 
-    if (!options.includes(id)) {
-      const updTotal = +total + optionPrice;
-      dispatch(setOptions([...options, id]));
-      dispatch(setPrice(updTotal));
+    if (!state.optIDs.includes(id)) {
+      const optPriceUpd = +state.optPrice + price;
+
+      dispatch(setOptions([...state.optIDs, id]));
+      dispatch(setOptionsPrice(optPriceUpd));
+
+      return;
     }
   };
 
-  const handleRent = (rent) => {
-    if (state.rent === rent) {
-      return dispatch(setRent(null));
-    }
+  const handleRent = (rentOpt) => {
+    const { id, priceQ } = rentOpt;
+    dispatch(setRent(id));
+    dispatch(setRentPrice(card.price * priceQ));
+  };
 
-    dispatch(setRent(rent));
+  const handleOrder = () => {
+    const orderData = {
+      optionIDs: state.optIDs,
+      rent: state.rent,
+    };
   };
 
   return (
-    <BoothStyled>
+    <CardStyled>
       <div className="carousel">
         <Carousel showStatus={false} showThumbs={false} autoPlay={false}>
-          {booth.photos.map((photo, i) => (
+          {card.photos.map((photo, i) => (
             <img src={photo} alt="" key={i} />
           ))}
         </Carousel>
       </div>
 
       <div className="info">
-        <h3 className="info_title">{booth.title}</h3>
+        <h3 className="info_title">{card.title}</h3>
 
         <div className="info_size">
           <span className="info_size-title">Размер: </span>
-          <span className="info_size-size">{booth.size}</span>
+          <span className="info_size-size">{card.size}</span>
         </div>
       </div>
 
@@ -280,11 +298,11 @@ export const Booth = ({ booth }) => {
           style={{ height: 152 }}
           renderThumbVertical={optionsThumb}
         >
-          {booth.options.map((option) => (
+          {card.options.map((option) => (
             <OptionStyled
               key={option.id}
-              selected={state.options.includes(option.id)}
-              onClick={() => handleOption(option.id)}
+              selected={state.optIDs.includes(option.id)}
+              onClick={() => handleOption(option)}
             >
               <img className="photo" src={option.photo} alt={option.title} />
 
@@ -304,23 +322,25 @@ export const Booth = ({ booth }) => {
         <h4 className="rent_title">Укажите время аренды</h4>
 
         <div className="rent_options">
-          {booth.rent.map((opt) => (
+          {card.rent.map((rentOpt) => (
             <RentOptionStyled
-              key={opt}
-              onClick={() => handleRent(opt)}
-              selected={state.rent === opt}
+              key={rentOpt.id}
+              onClick={() => handleRent(rentOpt)}
+              selected={state.rent === rentOpt.id}
             >
-              {opt}
+              {rentOpt.title}
             </RentOptionStyled>
           ))}
         </div>
       </div>
 
       <div className="cta">
-        <div className="cta_price font_roboto">{state.price} ₽</div>
+        <div className="cta_price font_roboto">
+          {+state.optPrice + state.rentPrice} ₽
+        </div>
 
-        <PrimaryButton title="Оставить заявку" />
+        <PrimaryButton title="Оставить заявку" handler={handleOrder} />
       </div>
-    </BoothStyled>
+    </CardStyled>
   );
 };

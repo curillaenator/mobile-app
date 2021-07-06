@@ -6,7 +6,7 @@ import { LoaderFS } from "../components/loaders/LoaderFS";
 import { Header } from "../components/header/Header";
 import { Video } from "../components/video/Video";
 import { Info } from "../components/info/Info";
-import { BoothList } from "../components/booth/BoothList";
+import { CardList } from "../components/card/CardList";
 
 import { getInitial } from "../../redux/reducers/main";
 
@@ -14,7 +14,7 @@ import { infoContent } from "../../api/fakecontent";
 
 const MainStyled = styled.main``;
 
-const MainPage = ({ isInit, boothList, getInitial }) => {
+const MainPage = ({ isInit, cardList, getInitial }) => {
   useEffect(() => getInitial(), [getInitial]);
 
   if (!isInit) return <LoaderFS />;
@@ -27,14 +27,14 @@ const MainPage = ({ isInit, boothList, getInitial }) => {
 
       <Info content={infoContent} />
 
-      <BoothList boothList={boothList} />
+      <CardList cardList={cardList} />
     </MainStyled>
   );
 };
 
 const mstp = (state) => ({
   isInit: state.main.isInit,
-  boothList: state.main.boothList,
+  cardList: state.main.cardList,
 });
 
 export const Main = connect(mstp, { getInitial })(MainPage);

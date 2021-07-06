@@ -38,7 +38,6 @@ export const PrimaryButton = ({
 }) => {
   return (
     <ButtonStyled
-      //   className="font_roboto"
       onClick={handler}
       active={active}
       disabled={disabled}

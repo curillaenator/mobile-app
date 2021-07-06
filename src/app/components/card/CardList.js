@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Booth } from "./Booth";
+import { Card } from "./Card";
 
 const ListStyled = styled.section`
   .list_title {
@@ -22,15 +22,15 @@ const ListStyled = styled.section`
   }
 `;
 
-export const BoothList = ({ boothList }) => {
+export const CardList = ({ cardList }) => {
   return (
     <ListStyled>
       <h2 className="list_title font_roboto">Фотобудки</h2>
 
       <div className="list_sort">Сортировка</div>
 
-      {boothList.map((booth) => (
-        <Booth key={booth.id} booth={booth} />
+      {cardList.map((card) => (
+        <Card key={card.id} card={card} />
       ))}
     </ListStyled>
   );

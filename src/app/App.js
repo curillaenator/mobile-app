@@ -2,6 +2,7 @@ import { Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 
 import { Main } from "./pages/Main";
+import { Order } from "./pages/Order";
 
 const AppStyled = styled.div`
   min-width: 320px;
@@ -15,6 +16,7 @@ export const App = () => {
     <AppStyled>
       <Switch>
         <Route exact path="/" render={() => <Main />} />
+        <Route path="/order" render={() => <Order />} />
       </Switch>
     </AppStyled>
   );
