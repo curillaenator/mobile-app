@@ -1,31 +1,32 @@
 import { useEffect, useReducer } from "react";
+import { useHistory } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import { Scrollbars } from "rc-scrollbars";
 import styled from "styled-components";
 
-import { PrimaryButton } from "../buttons/PrimaryButton";
+import { Button } from "../buttons/Button";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
 
 // ---- BOOTH STATE ----
 
-const SET_OPTIDS = "booth/SET_OPTIONS";
+const SET_OPTIONS = "card/SET_OPTIONS";
 const SET_OPT_PRICE = "booth/SET_OPT_PRICE";
 const SET_RENT = "booth/SET_RENT";
 const SET_RENT_PRICE = "booth/SET_RENT_PRICE";
 
 const initialState = {
-  optIDs: [],
+  options: [],
   optPrice: 0,
-  rent: null,
+  rent: [],
   rentPrice: 0,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case SET_OPTIDS:
-      return { ...state, optIDs: action.payload };
+    case SET_OPTIONS:
+      return { ...state, options: action.payload };
 
     case SET_OPT_PRICE:
       return { ...state, optPrice: action.payload };
@@ -41,7 +42,7 @@ const reducer = (state, action) => {
   }
 };
 
-const setOptions = (payload) => ({ type: SET_OPTIDS, payload });
+const setOptions = (payload) => ({ type: SET_OPTIONS, payload });
 const setOptionsPrice = (payload) => ({ type: SET_OPT_PRICE, payload });
 const setRent = (payload) => ({ type: SET_RENT, payload });
 const setRentPrice = (payload) => ({ type: SET_RENT_PRICE, payload });
@@ -227,48 +228,50 @@ const optionsThumb = ({ style, ...props }) => {
 };
 
 // main component
-export const Card = ({ card }) => {
+export const Card = ({ card, getOrder }) => {
+  const history = useHistory();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const initialPrice = card.rent[0].priceQ * +card.price;
-    dispatch(setRent(card.rent[0].id));
+    const initRentOpt = card.rent.map((opt, i) =>
+      i === 0 ? { ...opt, checked: true } : opt
+    );
+    dispatch(setOptions(card.options));
+    dispatch(setRent(initRentOpt));
+
     dispatch(setRentPrice(initialPrice));
   }, [card]);
 
-  const handleOption = (option) => {
-    const { id, price } = option;
+  const handleOption = (option, index) => {
+    const { price } = option;
 
-    if (state.optIDs.includes(id)) {
-      const optPriceUpd = +state.optPrice - price;
+    const optionUpd = { ...option, checked: !option.checked };
+    const optionsUpd = [...state.options];
+    optionsUpd.splice(index, 1, optionUpd);
 
-      dispatch(setOptions(state.optIDs.filter((optID) => optID !== id)));
-      dispatch(setOptionsPrice(optPriceUpd));
+    dispatch(setOptions(optionsUpd));
 
-      return;
-    }
+    if (option.checked) dispatch(setOptionsPrice(+state.optPrice - price));
 
-    if (!state.optIDs.includes(id)) {
-      const optPriceUpd = +state.optPrice + price;
-
-      dispatch(setOptions([...state.optIDs, id]));
-      dispatch(setOptionsPrice(optPriceUpd));
-
-      return;
-    }
+    if (!option.checked) dispatch(setOptionsPrice(+state.optPrice + price));
   };
 
-  const handleRent = (rentOpt) => {
-    const { id, priceQ } = rentOpt;
-    dispatch(setRent(id));
+  const handleRent = (rentOpt, index) => {
+    const { priceQ } = rentOpt;
+
+    const rentUpd = state.rent.map((opt, i) =>
+      i === index ? { ...opt, checked: true } : { ...opt, checked: false }
+    );
+
+    dispatch(setRent(rentUpd));
     dispatch(setRentPrice(card.price * priceQ));
   };
 
   const handleOrder = () => {
-    const orderData = {
-      optionIDs: state.optIDs,
-      rent: state.rent,
-    };
+    const order = { ...card, options: state.options, rent: state.rent };
+    getOrder(order);
+    history.push("/order");
   };
 
   return (
@@ -298,11 +301,11 @@ export const Card = ({ card }) => {
           style={{ height: 152 }}
           renderThumbVertical={optionsThumb}
         >
-          {card.options.map((option) => (
+          {state.options.map((option, i) => (
             <OptionStyled
               key={option.id}
-              selected={state.optIDs.includes(option.id)}
-              onClick={() => handleOption(option)}
+              selected={option.checked}
+              onClick={() => handleOption(option, i)}
             >
               <img className="photo" src={option.photo} alt={option.title} />
 
@@ -322,13 +325,13 @@ export const Card = ({ card }) => {
         <h4 className="rent_title">Укажите время аренды</h4>
 
         <div className="rent_options">
-          {card.rent.map((rentOpt) => (
+          {state.rent.map((opt, i) => (
             <RentOptionStyled
-              key={rentOpt.id}
-              onClick={() => handleRent(rentOpt)}
-              selected={state.rent === rentOpt.id}
+              key={opt.id}
+              onClick={() => handleRent(opt, i)}
+              selected={opt.checked}
             >
-              {rentOpt.title}
+              {opt.title}
             </RentOptionStyled>
           ))}
         </div>
@@ -339,7 +342,7 @@ export const Card = ({ card }) => {
           {+state.optPrice + state.rentPrice} ₽
         </div>
 
-        <PrimaryButton title="Оставить заявку" handler={handleOrder} />
+        <Button title="Оставить заявку" handler={handleOrder} />
       </div>
     </CardStyled>
   );

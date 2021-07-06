@@ -44,6 +44,6 @@ export const getInitial = () => async (dispatch) => {
   });
 };
 
-export const getOrder = () => (dispatch, getState) => {
-  const cardList = getState().main.cardList;
+export const getOrder = (order) => (dispatch) => {
+  dispatch(setOrder(order));
 };

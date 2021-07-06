@@ -5,6 +5,8 @@ export const colors = {
 
   primaryPeach50: "#ee3d4975",
 
+  secondaryGray: "#F5F5F5",
+
   fontDark: "#131313",
   fontGrayDark: "#939598",
   fontGray: "#6A6A6A",

@@ -1,4 +1,5 @@
 import photo from "../assets/images/photo.jpg";
+import photo2 from "../assets/images/photo2.jpg";
 
 const photos = [photo, photo, photo, photo, photo];
 
@@ -17,13 +18,15 @@ const rent = new Array(6).fill(1).map((_, i) => ({
   id: `rent${i}`,
   title: rentNames[i],
   priceQ: rentQs[i],
+  checked: false,
 }));
 
 const options = new Array(20).fill(1).map((_, i) => ({
   id: `option${i}`,
-  photo: photo,
+  photo: photo2,
   title: `Разработка макета рамки №${i}`,
   price: 1750 + 100 * i,
+  checked: false,
 }));
 
 const boothlist = new Array(20).fill(1).map((_, i) => ({

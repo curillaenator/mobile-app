@@ -6,8 +6,8 @@ const ButtonStyled = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
-  min-height: 40px;
+  width: ${({ fullwidth }) => (fullwidth ? "100%" : "fit-content")};
+  height: ${({ height }) => height}px;
   padding: 0 16px;
   border-radius: 6px;
   background-color: ${colors.primaryPeach};
@@ -30,8 +30,11 @@ const ButtonStyled = styled.button`
   }
 `;
 
-export const PrimaryButton = ({
+export const Button = ({
   title = "Button",
+  fullwidth = false,
+  height = 40,
+  secondary = false,
   active = false,
   disabled = false,
   handler = () => console.log("prim"),
@@ -39,6 +42,9 @@ export const PrimaryButton = ({
   return (
     <ButtonStyled
       onClick={handler}
+      fullwidth={fullwidth}
+      height={height}
+      secondary={secondary}
       active={active}
       disabled={disabled}
     >

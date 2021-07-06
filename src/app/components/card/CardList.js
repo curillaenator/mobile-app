@@ -22,7 +22,7 @@ const ListStyled = styled.section`
   }
 `;
 
-export const CardList = ({ cardList }) => {
+export const CardList = ({ cardList, getOrder }) => {
   return (
     <ListStyled>
       <h2 className="list_title font_roboto">Фотобудки</h2>
@@ -30,7 +30,7 @@ export const CardList = ({ cardList }) => {
       <div className="list_sort">Сортировка</div>
 
       {cardList.map((card) => (
-        <Card key={card.id} card={card} />
+        <Card key={card.id} card={card} getOrder={getOrder} />
       ))}
     </ListStyled>
   );

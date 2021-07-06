@@ -22,6 +22,8 @@ body {
   font-family: "Roboto Slab", serif;
 }
 
-.temptemp {
-  background-color: #d6d6d6;
+input {
+  font-family: "Open Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
