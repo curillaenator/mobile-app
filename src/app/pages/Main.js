@@ -8,13 +8,13 @@ import { Video } from "../components/video/Video";
 import { Info } from "../components/info/Info";
 import { CardList } from "../components/card/CardList";
 
-import { getInitial, getOrder } from "../../redux/reducers/main";
+import { getInitial, handleOrder } from "../../redux/reducers/main";
 
 import { infoContent } from "../../api/fakecontent";
 
 const MainStyled = styled.main``;
 
-const MainPage = ({ isInit, cardList, getInitial, getOrder }) => {
+const MainPage = ({ isInit, cardList, order, getInitial, handleOrder }) => {
   useEffect(() => getInitial(), [getInitial]);
 
   if (!isInit) return <LoaderFS />;
@@ -27,7 +27,7 @@ const MainPage = ({ isInit, cardList, getInitial, getOrder }) => {
 
       <Info content={infoContent} />
 
-      <CardList cardList={cardList} getOrder={getOrder} />
+      <CardList cardList={cardList} handleOrder={handleOrder} order={order} />
     </MainStyled>
   );
 };
@@ -35,6 +35,7 @@ const MainPage = ({ isInit, cardList, getInitial, getOrder }) => {
 const mstp = (state) => ({
   isInit: state.main.isInit,
   cardList: state.main.cardList,
+  order: state.main.order,
 });
 
-export const Main = connect(mstp, { getInitial, getOrder })(MainPage);
+export const Main = connect(mstp, { getInitial, handleOrder })(MainPage);

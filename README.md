@@ -12,7 +12,11 @@
 
 Скриншоты:
 
-<div style="display: flex; align-items: center; justify-content: center">
+<div style="display: flex; align-items: center; justify-content: center, margin-bottom: 32px">
   <img style="margin-right: 32px" src="/screens/image1.jpg">
   <img src="/screens/image2.jpg">
-</в>
+</div>
+
+<div style="display: flex; align-items: center; justify-content: center, margin-bottom: 32px">
+  <img src="/screens/image3.jpg">
+</div>

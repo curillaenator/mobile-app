@@ -44,6 +44,6 @@ export const getInitial = () => async (dispatch) => {
   });
 };
 
-export const getOrder = (order) => (dispatch) => {
+export const handleOrder = (order) => (dispatch) => {
   dispatch(setOrder(order));
 };

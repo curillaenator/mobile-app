@@ -1,14 +1,13 @@
 import { useReducer, useEffect } from "react";
-import { connect } from "react-redux";
-import { useHistory, Redirect } from "react-router-dom";
+// import {  Redirect } from "react-router-dom";
 import InputMask from "react-input-mask";
 import styled from "styled-components";
 
-import { Button } from "../components/buttons/Button";
-import { ButtonSecondary } from "../components/buttons/ButtonSecondary";
+import { Button } from "../buttons/Button";
+import { ButtonSecondary } from "../buttons/ButtonSecondary";
 
-import { colors } from "../../utils/colors";
-import { icons } from "../../utils/icons";
+import { colors } from "../../../utils/colors";
+import { icons } from "../../../utils/icons";
 
 // STATE MANAGEMENT
 
@@ -204,23 +203,22 @@ const OrderStyled = styled.section`
   }
 `;
 
-const OrderPage = ({ order }) => {
-  const history = useHistory();
+export const Order = ({ order, closeOrder }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-//   console.log(state);
+  //   console.log(state);
 
   useEffect(() => {
     order && dispatch(setOptions(order.options.filter((opt) => opt.checked)));
   }, [order]);
 
-  if (!order) return <Redirect to="/" />;
+  // if (!order) return <Redirect to="/" />;
 
   return (
     <OrderStyled>
       <div className="head">
         <h2 className="head_title font_roboto">Ваша заявка</h2>
-        <button className="head_button" onClick={() => history.goBack()}>
+        <button className="head_button" onClick={closeOrder}>
           {icons.close}
         </button>
       </div>
@@ -260,7 +258,6 @@ const OrderPage = ({ order }) => {
           value={state.tel}
           mask="+7 (999) 999 99 99"
           placeholder="+7 (999) 555 44 33"
-          //   alwaysShowMask
           onChange={(e) => dispatch(setTel(e.target.value))}
         />
 
@@ -273,17 +270,7 @@ const OrderPage = ({ order }) => {
         </div>
       </div>
 
-      <Button
-        title="Отправить заявку"
-        fullwidth
-        handler={() => history.push("/")}
-      />
+      <Button title="Отправить заявку" fullwidth handler={closeOrder} />
     </OrderStyled>
   );
 };
-
-const mstp = (state) => ({
-  order: state.main.order,
-});
-
-export const Order = connect(mstp, {})(OrderPage);

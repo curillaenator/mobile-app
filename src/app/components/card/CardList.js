@@ -1,6 +1,25 @@
+import { useState } from "react";
+import Popup from "reactjs-popup";
 import styled from "styled-components";
 
 import { Card } from "./Card";
+import { Order } from "../order/Order";
+
+const StyledPopup = styled(Popup)`
+  &-overlay {
+    padding: 0;
+    margin: 0;
+    background-color: #ffffff;
+  }
+
+  &-content {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    max-width: 375px;
+    min-width: 320px;
+  }
+`;
 
 const ListStyled = styled.section`
   .list_title {
@@ -22,7 +41,11 @@ const ListStyled = styled.section`
   }
 `;
 
-export const CardList = ({ cardList, getOrder }) => {
+export const CardList = ({ cardList, order, handleOrder }) => {
+  const [open, setOpen] = useState(false);
+  const closeOrder = () => setOpen(false);
+  const openOrder = () => setOpen(true);
+
   return (
     <ListStyled>
       <h2 className="list_title font_roboto">Фотобудки</h2>
@@ -30,8 +53,23 @@ export const CardList = ({ cardList, getOrder }) => {
       <div className="list_sort">Сортировка</div>
 
       {cardList.map((card) => (
-        <Card key={card.id} card={card} getOrder={getOrder} />
+        <Card
+          key={card.id}
+          card={card}
+          handleOrder={handleOrder}
+          openOrder={openOrder}
+        />
       ))}
+
+      <StyledPopup
+        open={open}
+        onClose={closeOrder}
+        arrow={false}
+        modal
+        lockScroll
+      >
+        <Order order={order} closeOrder={closeOrder} />
+      </StyledPopup>
     </ListStyled>
   );
 };

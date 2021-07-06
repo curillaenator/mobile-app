@@ -1,5 +1,4 @@
 import { useEffect, useReducer } from "react";
-import { useHistory } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import { Scrollbars } from "rc-scrollbars";
 import styled from "styled-components";
@@ -228,8 +227,7 @@ const optionsThumb = ({ style, ...props }) => {
 };
 
 // main component
-export const Card = ({ card, getOrder }) => {
-  const history = useHistory();
+export const Card = ({ card, handleOrder, openOrder }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -268,10 +266,10 @@ export const Card = ({ card, getOrder }) => {
     dispatch(setRentPrice(card.price * priceQ));
   };
 
-  const handleOrder = () => {
+  const orderHandler = () => {
     const order = { ...card, options: state.options, rent: state.rent };
-    getOrder(order);
-    history.push("/order");
+    handleOrder(order);
+    openOrder();
   };
 
   return (
@@ -342,7 +340,7 @@ export const Card = ({ card, getOrder }) => {
           {+state.optPrice + state.rentPrice} ₽
         </div>
 
-        <Button title="Оставить заявку" handler={handleOrder} />
+        <Button title="Оставить заявку" handler={orderHandler} />
       </div>
     </CardStyled>
   );
