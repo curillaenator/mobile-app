@@ -49,4 +49,20 @@ export const icons = {
       />
     </svg>
   ),
+  play: (
+    <svg
+      width="15"
+      height="20"
+      viewBox="0 0 15 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.0833 10L1.75 1.5V18.5L13.0833 10Z"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
 };

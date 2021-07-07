@@ -6,6 +6,8 @@ import { Dropdown } from "../dropdown/Dropdown";
 import { Card } from "./Card";
 import { Order } from "../order/Order";
 
+import { sortOptions } from "../../../api/fakecontent";
+
 const StyledPopup = styled(Popup)`
   &-overlay {
     padding: 0;
@@ -54,10 +56,6 @@ export const CardList = ({ cardList, order, handleOrder, setCardSort }) => {
   const closeOrder = () => setOpen(false);
   const openOrder = () => setOpen(true);
 
-  const sortOptions = [
-    { id: "opt1", title: "По возрастанию", type: "ascending", checked: true },
-    { id: "opt2", title: "По убыванию", type: "descending", checked: false },
-  ];
   const [sort, setSort] = useState(sortOptions);
   const handleSort = (updOptions) => {
     setSort(updOptions);

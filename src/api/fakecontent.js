@@ -120,3 +120,10 @@ export const infoContent = {
     },
   ],
 };
+
+export const sortOptions = [
+  { id: "opt1", title: "По возрастанию", type: "ascending", checked: true },
+  { id: "opt2", title: "По убыванию", type: "descending", checked: false },
+];
+
+export const videoURL = "https://www.youtube.com/watch?v=PZkSXpLCOqg";
