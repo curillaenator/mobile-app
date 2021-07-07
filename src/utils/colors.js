@@ -13,6 +13,7 @@ export const colors = {
   fontWhite: "#ffffff",
 
   backGrayDark: "#939598",
+  backGraySemi: "#d5dae0",
   backLightGray: "#FAFAFA",
   backGray: "#F1F2F2",
 

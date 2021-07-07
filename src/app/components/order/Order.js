@@ -1,10 +1,10 @@
 import { useReducer, useEffect } from "react";
-// import {  Redirect } from "react-router-dom";
 import InputMask from "react-input-mask";
 import styled from "styled-components";
 
 import { Button } from "../buttons/Button";
 import { ButtonSecondary } from "../buttons/ButtonSecondary";
+import { Dropdown } from "../dropdown/Dropdown";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -12,12 +12,14 @@ import { icons } from "../../../utils/icons";
 // STATE MANAGEMENT
 
 const SET_OPTIONS = "order/SET_OPTIONS";
+const SET_RENT = "order/SET_RENT";
 const SET_PRICE = "order/SET_PRICE";
 const SET_TEL = "order/SET_TEL";
 const SET_CALLME = "order/SET_CALLME";
 
 const initialState = {
   options: [],
+  rent: [],
   price: 250000,
   tel: "",
   callme: false,
@@ -27,6 +29,9 @@ const reducer = (state, action) => {
   switch (action.type) {
     case SET_OPTIONS:
       return { ...state, options: action.payload };
+
+    case SET_RENT:
+      return { ...state, rent: action.payload };
 
     case SET_PRICE:
       return { ...state, price: action.payload };
@@ -43,6 +48,7 @@ const reducer = (state, action) => {
 };
 
 const setOptions = (payload) => ({ type: SET_OPTIONS, payload });
+const setRent = (payload) => ({ type: SET_RENT, payload });
 const setPrice = (payload) => ({ type: SET_PRICE, payload });
 const setTel = (payload) => ({ type: SET_TEL, payload });
 const setCallme = (payload) => ({ type: SET_CALLME, payload });
@@ -120,15 +126,10 @@ const OrderStyled = styled.section`
   }
 
   .rent {
-    width: 82px;
-    height: 32px;
     margin-bottom: 20px;
-    border: 1px solid #d5dae0;
-    border-radius: 6px;
   }
 
   .option_list {
-    /* margin-bottom: 25px; */
     border-bottom: 1px solid #ebebeb;
 
     .option {
@@ -143,6 +144,9 @@ const OrderStyled = styled.section`
         font-weight: 700;
         font-size: 14px;
         line-height: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       &_price {
@@ -206,13 +210,22 @@ const OrderStyled = styled.section`
 export const Order = ({ order, closeOrder }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  //   console.log(state);
+  useEffect(() => {
+    dispatch(setOptions(order.options.filter((opt) => opt.checked)));
+    dispatch(setRent(order.rent));
+  }, [order.options, order.rent]);
 
   useEffect(() => {
-    order && dispatch(setOptions(order.options.filter((opt) => opt.checked)));
-  }, [order]);
+    if (state.options.length && state.rent.length) {
+      const optsPrice = state.options.reduce((sum, opt) => sum + opt.price, 0);
+      const rentPrice = state.rent.find((r) => r.checked).priceQ * order.price;
+      dispatch(setPrice(rentPrice + optsPrice));
+    }
+  }, [state.options, state.rent]);
 
-  // if (!order) return <Redirect to="/" />;
+  const handleRent = (rentList) => dispatch(setRent(rentList));
+
+  if (!order || !state.options.length || !state.rent.length) return <div></div>;
 
   return (
     <OrderStyled>
@@ -235,7 +248,9 @@ export const Order = ({ order, closeOrder }) => {
         <div className="info_price">{order.price} ₽</div>
       </div>
 
-      <div className="rent"></div>
+      <div className="rent">
+        <Dropdown options={state.rent} handleChange={handleRent} />
+      </div>
 
       <div className="option_list">
         {state.options.map((opt) => (
@@ -263,7 +278,8 @@ export const Order = ({ order, closeOrder }) => {
 
         <div className="callme_button">
           <ButtonSecondary
-            title={state.callme ? "Не звоните мне" : "Позвоните мне"}
+            title={state.callme ? "Не звонить" : "Позвоните мне"}
+            active={state.callme}
             height={32}
             handler={() => dispatch(setCallme(!state.callme))}
           />

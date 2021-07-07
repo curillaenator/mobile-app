@@ -67,6 +67,7 @@ export const CardList = ({ cardList, order, handleOrder }) => {
         arrow={false}
         modal
         lockScroll
+        closeOnDocumentClick={false}
       >
         <Order order={order} closeOrder={closeOrder} />
       </StyledPopup>

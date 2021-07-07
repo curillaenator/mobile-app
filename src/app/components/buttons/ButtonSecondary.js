@@ -10,7 +10,8 @@ const ButtonStyled = styled.button`
   height: ${({ height }) => height}px;
   padding: 0 16px;
   border-radius: 6px;
-  background-color: ${colors.secondaryGray};
+  background-color: ${({ active }) =>
+    active ? colors.primaryPeach : colors.secondaryGray};
   transition: 0.08s linear;
   cursor: pointer;
 
@@ -18,7 +19,7 @@ const ButtonStyled = styled.button`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: ${colors.fontDark};
+  color: ${({ active }) => (active ? colors.fontWhite : colors.fontDark)};
   user-select: none;
 
   &:hover {
