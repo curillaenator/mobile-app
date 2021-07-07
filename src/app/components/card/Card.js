@@ -8,7 +8,7 @@ import { Button } from "../buttons/Button";
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
 
-// ---- BOOTH STATE ----
+// ---- CARD STATE ----
 
 const SET_OPTIONS = "card/SET_OPTIONS";
 const SET_OPT_PRICE = "booth/SET_OPT_PRICE";

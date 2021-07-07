@@ -47,3 +47,16 @@ export const getInitial = () => async (dispatch) => {
 export const handleOrder = (order) => (dispatch) => {
   dispatch(setOrder(order));
 };
+
+export const setCardSort = (sortBy) => (dispatch, getState) => {
+  const sort = {
+    ascending: () => {
+      return [...getState().main.cardList].sort((a, b) => a.price - b.price);
+    },
+    descending: () => {
+      return [...getState().main.cardList].sort((a, b) => b.price - a.price);
+    },
+  };
+
+  dispatch(setCardList(sort[sortBy]()));
+};

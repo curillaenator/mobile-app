@@ -225,7 +225,7 @@ export const Order = ({ order, closeOrder }) => {
       : order.price;
 
     dispatch(setPrice(rentPrice + optsPrice));
-  }, [state.options, state.rent]);
+  }, [state.options, state.rent, order.price]);
 
   const handleRent = (rentList) => dispatch(setRent(rentList));
 

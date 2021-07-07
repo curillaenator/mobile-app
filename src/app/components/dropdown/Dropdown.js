@@ -100,7 +100,7 @@ const DropdownStyled = styled.div`
     transition: 0.08s ease-out;
     opacity: ${({ open }) => (open ? "1" : "0")};
     transform: translateY(${({ open }) => (open ? "0" : "32px")});
-    z-index: ${({ open }) => (open ? 0 : -20)};
+    z-index: ${({ open }) => (open ? 10 : -20)};
     box-shadow: 0px 19px 38px rgba(33, 38, 44, 0.15),
       0px 15px 12px rgba(33, 38, 44, 0.11);
   }
