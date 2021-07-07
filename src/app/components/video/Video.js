@@ -1,5 +1,5 @@
 import Popup from "reactjs-popup";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/youtube";
 import styled from "styled-components";
 
 import { colors } from "../../../utils/colors";
@@ -127,10 +127,6 @@ const VideoStyled = styled.section`
       }
 
       &:hover {
-        /* .frame_video-cover {
-          filter: brightness(1.2);
-        } */
-
         .frame_video-play {
           background-color: ${colors.primaryPeach};
 
