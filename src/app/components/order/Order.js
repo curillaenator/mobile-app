@@ -216,16 +216,18 @@ export const Order = ({ order, closeOrder }) => {
   }, [order.options, order.rent]);
 
   useEffect(() => {
-    if (state.options.length && state.rent.length) {
-      const optsPrice = state.options.reduce((sum, opt) => sum + opt.price, 0);
-      const rentPrice = state.rent.find((r) => r.checked).priceQ * order.price;
-      dispatch(setPrice(rentPrice + optsPrice));
-    }
+    const optsPrice = state.options.length
+      ? state.options.reduce((sum, opt) => sum + opt.price, 0)
+      : 0;
+
+    const rentPrice = state.rent.length
+      ? state.rent.find((r) => r.checked).priceQ * order.price
+      : order.price;
+
+    dispatch(setPrice(rentPrice + optsPrice));
   }, [state.options, state.rent]);
 
   const handleRent = (rentList) => dispatch(setRent(rentList));
-
-  if (!order || !state.options.length || !state.rent.length) return <div></div>;
 
   return (
     <OrderStyled>
