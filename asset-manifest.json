@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/mobile-app/static/css/main.8610174e.chunk.css",
-    "main.js": "/mobile-app/static/js/main.c18cf87d.chunk.js",
-    "main.js.map": "/mobile-app/static/js/main.c18cf87d.chunk.js.map",
+    "main.js": "/mobile-app/static/js/main.f1dda14a.chunk.js",
+    "main.js.map": "/mobile-app/static/js/main.f1dda14a.chunk.js.map",
     "runtime-main.js": "/mobile-app/static/js/runtime-main.d9100054.js",
     "runtime-main.js.map": "/mobile-app/static/js/runtime-main.d9100054.js.map",
     "static/css/2.ed1298f3.chunk.css": "/mobile-app/static/css/2.ed1298f3.chunk.css",
-    "static/js/2.eeac6544.chunk.js": "/mobile-app/static/js/2.eeac6544.chunk.js",
-    "static/js/2.eeac6544.chunk.js.map": "/mobile-app/static/js/2.eeac6544.chunk.js.map",
+    "static/js/2.e8ef6ffe.chunk.js": "/mobile-app/static/js/2.e8ef6ffe.chunk.js",
+    "static/js/2.e8ef6ffe.chunk.js.map": "/mobile-app/static/js/2.e8ef6ffe.chunk.js.map",
     "index.html": "/mobile-app/index.html",
     "static/css/2.ed1298f3.chunk.css.map": "/mobile-app/static/css/2.ed1298f3.chunk.css.map",
     "static/css/main.8610174e.chunk.css.map": "/mobile-app/static/css/main.8610174e.chunk.css.map",
-    "static/js/2.eeac6544.chunk.js.LICENSE.txt": "/mobile-app/static/js/2.eeac6544.chunk.js.LICENSE.txt",
+    "static/js/2.e8ef6ffe.chunk.js.LICENSE.txt": "/mobile-app/static/js/2.e8ef6ffe.chunk.js.LICENSE.txt",
     "static/media/dots.6a90779a.svg": "/mobile-app/static/media/dots.6a90779a.svg",
     "static/media/logo.7310d6f0.svg": "/mobile-app/static/media/logo.7310d6f0.svg",
     "static/media/photo.eb65117f.jpg": "/mobile-app/static/media/photo.eb65117f.jpg",
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.d9100054.js",
     "static/css/2.ed1298f3.chunk.css",
-    "static/js/2.eeac6544.chunk.js",
+    "static/js/2.e8ef6ffe.chunk.js",
     "static/css/main.8610174e.chunk.css",
-    "static/js/main.c18cf87d.chunk.js"
+    "static/js/main.f1dda14a.chunk.js"
   ]
 }
