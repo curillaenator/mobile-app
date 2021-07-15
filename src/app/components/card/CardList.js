@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 
@@ -7,6 +7,8 @@ import { Card } from "./Card";
 import { Order } from "../order/Order";
 
 import { sortOptions } from "../../../api/fakecontent";
+
+import { icons } from "../../../utils/icons";
 
 const StyledPopup = styled(Popup)`
   &-overlay {
@@ -25,36 +27,61 @@ const StyledPopup = styled(Popup)`
 `;
 
 const ListStyled = styled.section`
-  .list_title {
-    margin-bottom: 20px;
-    padding: 0 16px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 42px;
-  }
+  margin-bottom: 60px;
 
-  .list_sort {
+  .list_title {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
     padding: 0 16px;
-    /* z-index: 50000; */
+    cursor: pointer;
 
-    &-title {
+    &-label {
+      margin-right: 16px;
       font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 16px;
-      margin-right: 8px;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 42px;
+    }
+
+    & > svg {
+      width: 18px;
+      height: 10px;
+      transform: rotate(${({ height }) => (height ? "180deg" : "0")});
+      transition: 0.3s linear;
+    }
+  }
+
+  .accordion {
+    max-height: ${({ height }) => height}px;
+    overflow: hidden;
+    transition: 0.3s ease-in-out;
+
+    &_sort {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 0 16px;
+
+      &-title {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        margin-right: 8px;
+      }
     }
   }
 `;
 
 export const CardList = ({ cardList, order, handleOrder, setCardSort }) => {
+  const listRef = useRef(null);
+
   const [open, setOpen] = useState(false);
   const closeOrder = () => setOpen(false);
   const openOrder = () => setOpen(true);
+
+  const [listOpen, setListOpen] = useState(false);
 
   const [sort, setSort] = useState(sortOptions);
   const handleSort = (updOptions) => {
@@ -65,22 +92,27 @@ export const CardList = ({ cardList, order, handleOrder, setCardSort }) => {
   };
 
   return (
-    <ListStyled>
-      <h2 className="list_title font_roboto">Фотобудки</h2>
-
-      <div className="list_sort">
-        <h4 className="list_sort-title">Сортировка: </h4>
-        <Dropdown options={sort} handleChange={handleSort} />
+    <ListStyled height={listOpen ? listRef.current.scrollHeight : 0}>
+      <div className="list_title" onClick={() => setListOpen(!listOpen)}>
+        <h2 className="list_title-label font_roboto">Фотобудки</h2>
+        {icons.arrow}
       </div>
 
-      {cardList.map((card) => (
-        <Card
-          key={card.id}
-          card={card}
-          handleOrder={handleOrder}
-          openOrder={openOrder}
-        />
-      ))}
+      <div className="accordion" ref={listRef}>
+        <div className="accordion_sort">
+          <h4 className="accordion_sort-title">Сортировка: </h4>
+          <Dropdown options={sort} handleChange={handleSort} />
+        </div>
+
+        {cardList.map((card) => (
+          <Card
+            key={card.id}
+            card={card}
+            handleOrder={handleOrder}
+            openOrder={openOrder}
+          />
+        ))}
+      </div>
 
       <StyledPopup
         open={open}
