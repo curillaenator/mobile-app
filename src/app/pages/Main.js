@@ -7,6 +7,7 @@ import { Header } from "../components/header/Header";
 import { Video } from "../components/video/Video";
 import { Info } from "../components/info/Info";
 import { CardList } from "../components/card/CardList";
+import { Faq } from "../components/faq/Faq";
 
 import {
   getInitial,
@@ -14,7 +15,7 @@ import {
   setCardSort,
 } from "../../redux/reducers/main";
 
-import { infoContent } from "../../api/fakecontent";
+import { infoContent, faqContent } from "../../api/fakecontent";
 
 const MainStyled = styled.main``;
 
@@ -44,6 +45,8 @@ const MainPage = ({
         order={order}
         setCardSort={setCardSort}
       />
+
+      <Faq data={faqContent} />
     </MainStyled>
   );
 };
