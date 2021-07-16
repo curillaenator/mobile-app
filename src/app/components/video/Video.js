@@ -8,8 +8,6 @@ import { icons } from "../../../utils/icons";
 import dots from "../../../assets/icons/dots.svg";
 import frame from "../../../assets/images/video.png";
 
-import { videoURL } from "../../../api/fakecontent";
-
 const PopupStyled = styled(Popup)`
   &-overlay {
     padding: 0;
@@ -144,7 +142,7 @@ const VideoStyled = styled.section`
   }
 `;
 
-export const Video = () => {
+export const Video = ({ videoURL }) => {
   return (
     <VideoStyled>
       <div className="frame">

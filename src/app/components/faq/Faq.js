@@ -11,12 +11,12 @@ const FaqStyled = styled.section`
   }
 `;
 
-export const Faq = ({ data }) => {
+export const Faq = ({ faqList }) => {
   return (
     <FaqStyled>
       <h2 className="faqtitle">FAQ</h2>
 
-      {data.map((item) => (
+      {faqList.map((item) => (
         <FaqItem key={item.id} item={item} />
       ))}
     </FaqStyled>

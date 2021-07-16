@@ -6,21 +6,26 @@ import type {
   IInitialState,
   ICard,
   INews,
+  IFaq,
   TAction,
   TThunk,
 } from "../../types/types";
 
 const SET_INITIALIZE = "main/SET_INIT";
+const SET_VIDEO_URL = "main/SET_VIDEO_URL";
 const SET_CARDLIST = "main/SET_BOOTHLIST";
 const SET_CURRENT_ORDER = "main/SET_ORDER";
+const SET_FAQ_LIST = "main/SET_FAQ_LIST";
 const SET_NEWSLIST = "main/SET_NEWSLIST";
 const SET_NEWSCURP = "main/SET_NEWSCURP";
 const SET_NEWSTOTAL = "main/SET_NEWSTOTAL";
 
 const initialState: IInitialState = {
   isInit: false,
+  videoURL: "",
   cardList: [],
   order: null,
+  faqList: [],
   newsTotal: 0,
   newsList: [],
   newsPSize: 3,
@@ -35,11 +40,17 @@ export const main: Reducer<IInitialState, AnyAction> = (
     case SET_INITIALIZE:
       return { ...state, isInit: action.payload };
 
+    case SET_VIDEO_URL:
+      return { ...state, videoURL: action.payload };
+
     case SET_CARDLIST:
       return { ...state, cardList: action.payload };
 
     case SET_CURRENT_ORDER:
       return { ...state, order: action.payload };
+
+    case SET_FAQ_LIST:
+      return { ...state, faqList: action.payload };
 
     case SET_NEWSTOTAL:
       return { ...state, newsTotal: action.payload };
@@ -62,6 +73,11 @@ const setInit: TAction<boolean> = (payload) => ({
   payload,
 });
 
+const setVideoURL: TAction<string> = (payload) => ({
+  type: SET_VIDEO_URL,
+  payload,
+});
+
 const setCardList: TAction<ICard[]> = (payload) => ({
   type: SET_CARDLIST,
   payload,
@@ -69,6 +85,11 @@ const setCardList: TAction<ICard[]> = (payload) => ({
 
 const setOrder: TAction<ICard> = (payload) => ({
   type: SET_CURRENT_ORDER,
+  payload,
+});
+
+const setFaqList: TAction<IFaq[]> = (payload) => ({
+  type: SET_FAQ_LIST,
   payload,
 });
 
@@ -92,16 +113,21 @@ const setNewsCurP: TAction<number> = (payload) => ({
 export const getInitial = (): TThunk => async (dispatch, getState) => {
   const pSize = getState().main.newsPSize;
 
+  const videoURL = await fakeApi.getVideoURL();
   const cardList = await fakeApi.getBoothList();
   const newsList = await fakeApi.getNewsList(0, pSize);
+  const faqList = await fakeApi.getFaqList();
   const newsTotal = await fakeApi.getTotalNews();
 
-  batch(() => {
+  await batch(() => {
+    dispatch(setVideoURL(videoURL));
     dispatch(setCardList(cardList));
     dispatch(setNewsList(newsList));
     dispatch(setNewsTotal(newsTotal));
-    dispatch(setInit(true));
+    dispatch(setFaqList(faqList));
   });
+
+  dispatch(setInit(true));
 };
 
 export const handleOrder = (order: ICard): TThunk => {

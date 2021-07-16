@@ -1,22 +1,30 @@
-import { useReducer, useEffect } from "react";
+import { FC, useReducer, useEffect } from "react";
 import styled from "styled-components";
 
 import { icons } from "../../../utils/icons";
 import { colors } from "../../../utils/colors";
 
+import type { AnyAction } from "@reduxjs/toolkit";
+import type { TReducer, TAction, IDropdownOption } from "../../../types/types";
+
 // STATE
 
-const SET_OPEN = "dropdown/SET_OPEN";
+const SET_DROPDOWN_OPEN = "dropdown/SET_OPEN";
 const SET_LIST = "dropdown/SET_LIST";
 
-const initialState = { list: [], open: false };
+interface IInitialState {
+  list: IDropdownOption[];
+  open: boolean;
+}
 
-const reducer = (state, action) => {
+const initialState: IInitialState = { list: [], open: false };
+
+const reducer: TReducer<IInitialState, AnyAction> = (state, action) => {
   switch (action.type) {
     case SET_LIST:
       return { ...state, list: action.payload };
 
-    case SET_OPEN:
+    case SET_DROPDOWN_OPEN:
       return { ...state, open: action.payload };
 
     default:
@@ -24,12 +32,23 @@ const reducer = (state, action) => {
   }
 };
 
-const setOpen = (payload) => ({ type: SET_OPEN, payload });
-const setList = (payload) => ({ type: SET_LIST, payload });
+const setOpen: TAction<boolean> = (payload) => ({
+  type: SET_DROPDOWN_OPEN,
+  payload,
+});
+
+const setList: TAction<IDropdownOption[]> = (payload) => ({
+  type: SET_LIST,
+  payload,
+});
 
 // COMPONENT
 
-const OptionStyled = styled.button`
+interface IOptionStyled {
+  selected: boolean;
+}
+
+const OptionStyled = styled.button<IOptionStyled>`
   width: 100%;
   height: 32px;
   padding: 0 16px;
@@ -52,7 +71,11 @@ const OptionStyled = styled.button`
   }
 `;
 
-const DropdownStyled = styled.div`
+interface IDropdownStyled {
+  open: boolean;
+}
+
+const DropdownStyled = styled.div<IDropdownStyled>`
   position: relative;
   width: fit-content;
 
@@ -106,16 +129,21 @@ const DropdownStyled = styled.div`
   }
 `;
 
-export const Dropdown = ({ options = [], handleChange }) => {
+interface IDropdown {
+  options: IDropdownOption[];
+  handleChange: (list: any[]) => void;
+}
+
+export const Dropdown: FC<IDropdown> = ({ options, handleChange }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { list, open } = state;
 
   useEffect(() => dispatch(setList(options)), [options]);
 
-  const handleOption = (opt) => {
+  const handleOption = (clickedOpt: IDropdownOption) => {
     const listUpd = list.map((option) =>
-      option.id === opt.id
-        ? { ...opt, checked: true }
+      option.id === clickedOpt.id
+        ? { ...clickedOpt, checked: true }
         : { ...option, checked: false }
     );
 
@@ -130,6 +158,7 @@ export const Dropdown = ({ options = [], handleChange }) => {
     <DropdownStyled open={open}>
       <div className="title" onClick={() => dispatch(setOpen(!open))}>
         <h4 className="title_title">
+          {/* @ts-ignore */}
           {list.length && list.find((o) => o.checked === true).title}
         </h4>
 

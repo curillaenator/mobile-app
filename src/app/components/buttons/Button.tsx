@@ -1,8 +1,16 @@
+import { FC } from "react";
 import styled from "styled-components";
 
 import { colors } from "../../../utils/colors";
 
-const ButtonStyled = styled.button`
+export interface IButtonStyled {
+  fullwidth: boolean;
+  height: number;
+  active: boolean;
+  disabled: boolean;
+}
+
+const ButtonStyled = styled.button<IButtonStyled>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,16 +18,15 @@ const ButtonStyled = styled.button`
   height: ${({ height }) => height}px;
   padding: 0 16px;
   border-radius: 6px;
-  background-color: ${({ active }) =>
-    active ? colors.primaryPeach : colors.secondaryGray};
+  background-color: ${colors.primaryPeach};
   transition: 0.08s linear;
   cursor: pointer;
 
   font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  color: ${({ active }) => (active ? colors.fontWhite : colors.fontDark)};
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  color: ${colors.fontWhite};
   user-select: none;
 
   &:hover {
@@ -31,21 +38,30 @@ const ButtonStyled = styled.button`
   }
 `;
 
-export const ButtonSecondary = ({
-  title = "Button",
+export interface IButton {
+  title: string;
+  fullwidth?: boolean;
+  height?: number;
+  active?: boolean;
+  disabled?: boolean;
+  handler: () => void;
+}
+
+export const Button: FC<IButton> = ({
+  title = "Кнопка",
   fullwidth = false,
   height = 40,
   active = false,
   disabled = false,
-  handler = () => console.log("secondary"),
+  handler = () => console.log("prim"),
 }) => {
   return (
     <ButtonStyled
-      onClick={handler}
       fullwidth={fullwidth}
       height={height}
       active={active}
       disabled={disabled}
+      onClick={handler}
     >
       {title}
     </ButtonStyled>

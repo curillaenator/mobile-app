@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { FC, useEffect, useReducer } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Scrollbars } from "rc-scrollbars";
 import styled from "styled-components";
@@ -8,6 +8,15 @@ import { Button } from "../buttons/Button";
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
 
+import type { AnyAction } from "@reduxjs/toolkit";
+import type {
+  ICard,
+  ICardRent,
+  ICardOption,
+  TReducer,
+  TAction,
+} from "../../../types/types";
+
 // ---- CARD STATE ----
 
 const SET_OPTIONS = "card/SET_OPTIONS";
@@ -15,14 +24,21 @@ const SET_OPT_PRICE = "booth/SET_OPT_PRICE";
 const SET_RENT = "booth/SET_RENT";
 const SET_RENT_PRICE = "booth/SET_RENT_PRICE";
 
-const initialState = {
+interface IInitialState {
+  options: ICardOption[];
+  optPrice: number;
+  rent: ICardRent[];
+  rentPrice: number;
+}
+
+const initialState: IInitialState = {
   options: [],
   optPrice: 0,
   rent: [],
   rentPrice: 0,
 };
 
-const reducer = (state, action) => {
+const reducer: TReducer<IInitialState, AnyAction> = (state, action) => {
   switch (action.type) {
     case SET_OPTIONS:
       return { ...state, options: action.payload };
@@ -41,15 +57,34 @@ const reducer = (state, action) => {
   }
 };
 
-const setOptions = (payload) => ({ type: SET_OPTIONS, payload });
-const setOptionsPrice = (payload) => ({ type: SET_OPT_PRICE, payload });
-const setRent = (payload) => ({ type: SET_RENT, payload });
-const setRentPrice = (payload) => ({ type: SET_RENT_PRICE, payload });
+const setOptions: TAction<ICardOption[]> = (payload) => ({
+  type: SET_OPTIONS,
+  payload,
+});
+
+const setOptionsPrice: TAction<number> = (payload) => ({
+  type: SET_OPT_PRICE,
+  payload,
+});
+
+const setRent: TAction<ICardRent[]> = (payload) => ({
+  type: SET_RENT,
+  payload,
+});
+
+const setRentPrice: TAction<number> = (payload) => ({
+  type: SET_RENT_PRICE,
+  payload,
+});
 
 // ---- BOOTH COMPONENT ----
 
 // css styled
-const OptionStyled = styled.div`
+interface IOption {
+  selected: boolean;
+}
+
+const OptionStyled = styled.div<IOption>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -108,7 +143,7 @@ const OptionStyled = styled.div`
   }
 `;
 
-const RentOptionStyled = styled.div`
+const RentOptionStyled = styled.div<IOption>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,13 +256,21 @@ const CardStyled = styled.div`
 `;
 
 // sub components
-const optionsThumb = ({ style, ...props }) => {
-  const thubmStyle = { ...style, backgroundColor: colors.primaryPeach };
+
+// @ts-ignore
+const optionsThumb = (props) => {
+  const thubmStyle = { ...props.style, backgroundColor: colors.primaryPeach };
   return <div style={thubmStyle} {...props} />;
 };
 
 // main component
-export const Card = ({ card, handleOrder, openOrder }) => {
+interface ICardComp {
+  card: ICard;
+  handleOrder: (order: ICard) => void;
+  openOrder: () => void;
+}
+
+export const Card: FC<ICardComp> = ({ card, handleOrder, openOrder }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -241,7 +284,7 @@ export const Card = ({ card, handleOrder, openOrder }) => {
     dispatch(setRentPrice(initialPrice));
   }, [card]);
 
-  const handleOption = (option, index) => {
+  const handleOption = (option: ICardOption, index: number) => {
     const { price } = option;
 
     const optionUpd = { ...option, checked: !option.checked };
@@ -255,7 +298,7 @@ export const Card = ({ card, handleOrder, openOrder }) => {
     if (!option.checked) dispatch(setOptionsPrice(+state.optPrice + price));
   };
 
-  const handleRent = (rentOpt, index) => {
+  const handleRent = (rentOpt: ICardRent, index: number) => {
     const { priceQ } = rentOpt;
 
     const rentUpd = state.rent.map((opt, i) =>

@@ -46,7 +46,7 @@ const ItemStyled = styled.div`
   }
 
   .body {
-    padding: 4px 0 4px 9px;
+    padding: 4px 9px;
     border-left: 1px solid ${colors.primaryPeach};
 
     &_content {

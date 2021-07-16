@@ -2,9 +2,9 @@ import photo from "../assets/images/photo.jpg";
 import photo2 from "../assets/images/photo2.jpg";
 import newsPhoto from "../assets/images/newsPhoto.jpg";
 
-import type { ICard, INews } from "../types/types";
+import type { ICard, INews, IFaq } from "../types/types";
 
-const photos = [photo, photo, photo, photo, photo];
+const photos: string[] = [photo, photo, photo, photo, photo];
 
 const rentNames = [
   "1 час",
@@ -51,7 +51,19 @@ const newsList = new Array(20).fill(1).map((_, i) => ({
   date: "20 Марта 2021",
 }));
 
+const faqList = new Array(6).fill(1).map((_, i) => ({
+  id: `faq${i}`,
+  title: `Какой реквизит идет в комплекте №${i}?`,
+  content:
+    "Какой то текст для заголовка Какой то текст для заго Какой то текст для заголовка Какой то текст для загоКакой то текст для заголовка Какой то текст для заго Какой то текст для заголовка Какой то текст для загоКакой то текст для заголовка Какой то текст для заго",
+}));
+
+const videoURL = "https://www.youtube.com/watch?v=PZkSXpLCOqg";
+
 export const fakeApi = {
+  getVideoURL(): Promise<string> {
+    return new Promise((resolve) => resolve(videoURL));
+  },
   getBoothList(): Promise<ICard[]> {
     return new Promise((resolve) => resolve(cardList));
   },
@@ -60,5 +72,8 @@ export const fakeApi = {
   },
   getNewsList(start: number, end: number): Promise<INews[]> {
     return new Promise((resolve) => resolve([...newsList].splice(start, end)));
+  },
+  getFaqList(): Promise<IFaq[]> {
+    return new Promise((resolve) => resolve(faqList));
   },
 };

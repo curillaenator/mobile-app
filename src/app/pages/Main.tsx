@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
+import { FC, useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
+// import styled from "styled-components";
 
 import { LoaderFS } from "../components/loaders/LoaderFS";
 import { Header } from "../components/header/Header";
@@ -17,14 +17,18 @@ import {
   getNews,
 } from "../../redux/reducers/main";
 
-import { infoContent, faqContent } from "../../api/fakecontent";
+import type { TState } from "../../redux/store";
 
-const MainStyled = styled.main``;
+import { infoContent } from "../../api/fakecontent";
 
-const MainPage = ({
+type TMainPage = ConnectedProps<typeof connector>;
+
+const MainPage: FC<TMainPage> = ({
   isInit,
+  videoURL,
   cardList,
   order,
+  faqList,
   newsList,
   newsTotal,
   getInitial,
@@ -37,38 +41,44 @@ const MainPage = ({
   if (!isInit) return <LoaderFS />;
 
   return (
-    <MainStyled>
+    <main>
       <Header />
 
-      <Video />
+      <Video videoURL={videoURL} />
 
       <Info content={infoContent} />
 
       <CardList
         cardList={cardList}
-        handleOrder={handleOrder}
         order={order}
+        handleOrder={handleOrder}
         setCardSort={setCardSort}
       />
 
-      <Faq data={faqContent} />
+      <Faq faqList={faqList} />
 
       <NewsList newsList={newsList} newsTotal={newsTotal} getNews={getNews} />
-    </MainStyled>
+    </main>
   );
 };
 
-const mstp = (state) => ({
+const mstp = (state: TState) => ({
   isInit: state.main.isInit,
+  videoURL: state.main.videoURL,
   cardList: state.main.cardList,
   order: state.main.order,
+  faqList: state.main.faqList,
   newsList: state.main.newsList,
   newsTotal: state.main.newsTotal,
 });
 
-export const Main = connect(mstp, {
+const mdtp = {
   getInitial,
   handleOrder,
   setCardSort,
   getNews,
-})(MainPage);
+};
+
+const connector = connect(mstp, mdtp);
+
+export const Main = connector(MainPage);
