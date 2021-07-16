@@ -2,6 +2,8 @@ import photo from "../assets/images/photo.jpg";
 import photo2 from "../assets/images/photo2.jpg";
 import newsPhoto from "../assets/images/newsPhoto.jpg";
 
+import type { ICard, INews } from "../types/types";
+
 const photos = [photo, photo, photo, photo, photo];
 
 const rentNames = [
@@ -30,7 +32,7 @@ const options = new Array(20).fill(1).map((_, i) => ({
   checked: false,
 }));
 
-const boothlist = new Array(20).fill(1).map((_, i) => ({
+const cardList = new Array(20).fill(1).map((_, i) => ({
   id: `booth${i}`,
   title: `Фотобудка с ширмой №${i}`,
   size: "2м x 1.5м x 2 м",
@@ -50,8 +52,13 @@ const newsList = new Array(20).fill(1).map((_, i) => ({
 }));
 
 export const fakeApi = {
-  getBoothList: () => new Promise((resolve) => resolve(boothlist)),
-  getTotalNews: () => new Promise((resolve) => resolve(newsList.length)),
-  getNewsList: (start, end) =>
-    new Promise((resolve) => resolve([...newsList].splice(start, end))),
+  getBoothList(): Promise<ICard[]> {
+    return new Promise((resolve) => resolve(cardList));
+  },
+  getTotalNews(): Promise<number> {
+    return new Promise((resolve) => resolve(newsList.length));
+  },
+  getNewsList(start: number, end: number): Promise<INews[]> {
+    return new Promise((resolve) => resolve([...newsList].splice(start, end)));
+  },
 };

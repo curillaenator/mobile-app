@@ -11,6 +11,7 @@ const ListStyled = styled.section`
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    cursor: pointer;
 
     &_title {
       font-style: normal;
