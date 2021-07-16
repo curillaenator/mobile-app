@@ -1,5 +1,6 @@
 import photo from "../assets/images/photo.jpg";
 import photo2 from "../assets/images/photo2.jpg";
+import newsPhoto from "../assets/images/newsPhoto.jpg";
 
 const photos = [photo, photo, photo, photo, photo];
 
@@ -39,6 +40,18 @@ const boothlist = new Array(20).fill(1).map((_, i) => ({
   price: 17000 + 100 * i,
 }));
 
+const newsList = new Array(20).fill(1).map((_, i) => ({
+  id: `news${i}`,
+  title: `Фотобудки, GIF стойка ${i}`,
+  type: "Услуги",
+  photoURL: newsPhoto,
+  content: "У нас есть широчайший ассортимент фотобудок на все случаи жизни",
+  date: "20 Марта 2021",
+}));
+
 export const fakeApi = {
   getBoothList: () => new Promise((resolve) => resolve(boothlist)),
+  getTotalNews: () => new Promise((resolve) => resolve(newsList.length)),
+  getNewsList: (start, end) =>
+    new Promise((resolve) => resolve([...newsList].splice(start, end))),
 };
