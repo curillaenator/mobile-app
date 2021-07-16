@@ -55,6 +55,7 @@ export interface IDropdownOption {
   checked: boolean;
 }
 
+//main reducer in redux store
 export interface IInitialState {
   isInit: boolean;
   videoURL: string;
@@ -69,4 +70,4 @@ export interface IInitialState {
 
 export type TAction<T> = (payload?: T) => { type: string; payload?: T }; // Action creator
 export type TThunk = ThunkAction<void, TState, unknown, AnyAction>;
-export type TReducer<S, A> = (state: S, action: A) => S;
+export type TReducer<S, A> = (state: S, action: A) => S; // generic reducer type for local state

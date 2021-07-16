@@ -1,9 +1,16 @@
+import { FC } from "react";
 import styled from "styled-components";
 
 import { ButtonOutline } from "../buttons/ButtonOutline";
 import { News } from "./News";
 
-const ListStyled = styled.section`
+import type { INews } from "../../../types/types";
+
+interface IListStyled {
+  loaded: boolean;
+}
+
+const ListStyled = styled.section<IListStyled>`
   padding: 0 16px;
   margin-bottom: 60px;
 
@@ -26,7 +33,13 @@ const ListStyled = styled.section`
   }
 `;
 
-export const NewsList = ({ newsList, newsTotal, getNews }) => {
+interface INewsList {
+  newsList: INews[];
+  newsTotal: number;
+  getNews: () => void;
+}
+
+export const NewsList: FC<INewsList> = ({ newsList, newsTotal, getNews }) => {
   const isBtnVisible = (newsList.length || []) < newsTotal;
 
   return (

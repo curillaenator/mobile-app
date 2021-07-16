@@ -98,4 +98,4 @@ export const infoContent = {
   ],
 };
 
-
+export type TInfoContent = typeof infoContent;

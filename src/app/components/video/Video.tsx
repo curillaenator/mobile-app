@@ -1,3 +1,4 @@
+import { FC } from "react";
 import Popup from "reactjs-popup";
 import ReactPlayer from "react-player/youtube";
 import styled from "styled-components";
@@ -142,7 +143,11 @@ const VideoStyled = styled.section`
   }
 `;
 
-export const Video = ({ videoURL }) => {
+interface IVideo {
+  videoURL: string;
+}
+
+export const Video: FC<IVideo> = ({ videoURL }) => {
   return (
     <VideoStyled>
       <div className="frame">
@@ -161,7 +166,7 @@ export const Video = ({ videoURL }) => {
             </div>
           )}
         >
-          {(close) => (
+          {(close: () => void) => (
             <VideoModal>
               <div className="head">
                 <button className="head_button" onClick={close}>

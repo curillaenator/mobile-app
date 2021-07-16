@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from "react";
+import { FC, useReducer, useEffect } from "react";
 import InputMask from "react-input-mask";
 import styled from "styled-components";
 
@@ -9,23 +9,40 @@ import { Dropdown } from "../dropdown/Dropdown";
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
 
+import type { AnyAction } from "@reduxjs/toolkit";
+import type {
+  TReducer,
+  TAction,
+  ICardOption,
+  ICardRent,
+  ICard,
+} from "../../../types/types";
+
 // STATE MANAGEMENT
 
 const SET_OPTIONS = "order/SET_OPTIONS";
 const SET_RENT = "order/SET_RENT";
-const SET_PRICE = "order/SET_PRICE";
-const SET_TEL = "order/SET_TEL";
+const SET_TOTAL_PRICE = "order/SET_PRICE";
+const SET_TELEPHONE = "order/SET_TEL";
 const SET_CALLME = "order/SET_CALLME";
 
-const initialState = {
+interface IInitialState {
+  options: ICardOption[];
+  rent: ICardRent[];
+  price: number;
+  tel: string;
+  callme: boolean;
+}
+
+const initialState: IInitialState = {
   options: [],
   rent: [],
-  price: 250000,
+  price: 0,
   tel: "",
   callme: false,
 };
 
-const reducer = (state, action) => {
+const reducer: TReducer<IInitialState, AnyAction> = (state, action) => {
   switch (action.type) {
     case SET_OPTIONS:
       return { ...state, options: action.payload };
@@ -33,10 +50,10 @@ const reducer = (state, action) => {
     case SET_RENT:
       return { ...state, rent: action.payload };
 
-    case SET_PRICE:
+    case SET_TOTAL_PRICE:
       return { ...state, price: action.payload };
 
-    case SET_TEL:
+    case SET_TELEPHONE:
       return { ...state, tel: action.payload };
 
     case SET_CALLME:
@@ -47,11 +64,30 @@ const reducer = (state, action) => {
   }
 };
 
-const setOptions = (payload) => ({ type: SET_OPTIONS, payload });
-const setRent = (payload) => ({ type: SET_RENT, payload });
-const setPrice = (payload) => ({ type: SET_PRICE, payload });
-const setTel = (payload) => ({ type: SET_TEL, payload });
-const setCallme = (payload) => ({ type: SET_CALLME, payload });
+const setOptions: TAction<ICardOption[]> = (payload) => ({
+  type: SET_OPTIONS,
+  payload,
+});
+
+const setRent: TAction<ICardRent[]> = (payload) => ({
+  type: SET_RENT,
+  payload,
+});
+
+const setPrice: TAction<number> = (payload) => ({
+  type: SET_TOTAL_PRICE,
+  payload,
+});
+
+const setTelephone: TAction<string> = (payload) => ({
+  type: SET_TELEPHONE,
+  payload,
+});
+
+const setCallme: TAction<boolean> = (payload) => ({
+  type: SET_CALLME,
+  payload,
+});
 
 // COMPONENT
 
@@ -207,7 +243,12 @@ const OrderStyled = styled.section`
   }
 `;
 
-export const Order = ({ order, closeOrder }) => {
+interface IOrder {
+  order: ICard;
+  closeOrder: () => void;
+}
+
+export const Order: FC<IOrder> = ({ order, closeOrder }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -221,13 +262,14 @@ export const Order = ({ order, closeOrder }) => {
       : 0;
 
     const rentPrice = state.rent.length
-      ? state.rent.find((r) => r.checked).priceQ * order.price
+      ? // @ts-ignore
+        state.rent.find((r) => r.checked).priceQ * order.price
       : order.price;
 
     dispatch(setPrice(rentPrice + optsPrice));
   }, [state.options, state.rent, order.price]);
 
-  const handleRent = (rentList) => dispatch(setRent(rentList));
+  const handleRent = (rentList: ICardRent[]) => dispatch(setRent(rentList));
 
   return (
     <OrderStyled>
@@ -275,7 +317,7 @@ export const Order = ({ order, closeOrder }) => {
           value={state.tel}
           mask="+7 (999) 999 99 99"
           placeholder="+7 (999) 555 44 33"
-          onChange={(e) => dispatch(setTel(e.target.value))}
+          onChange={(e) => dispatch(setTelephone(e.target.value))}
         />
 
         <div className="callme_button">

@@ -1,6 +1,9 @@
+import { FC } from "react";
 import styled from "styled-components";
 
 import { colors } from "../../../utils/colors";
+
+import type { INews } from "../../../types/types";
 
 const contentText = () => `
   font-style: normal;
@@ -60,7 +63,11 @@ const NewsStyled = styled.section`
   }
 `;
 
-export const News = ({ news }) => {
+interface INewsComp {
+  news: INews;
+}
+
+export const News: FC<INewsComp> = ({ news }) => {
   return (
     <NewsStyled>
       <div className="photo">

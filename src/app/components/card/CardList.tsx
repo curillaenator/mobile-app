@@ -133,7 +133,11 @@ export const CardList: FC<ICardList> = ({
         lockScroll
         closeOnDocumentClick={false}
       >
-        <Order order={order} closeOrder={() => setModalOpen(false)} />
+        <Order
+          // @ts-ignore
+          order={order}
+          closeOrder={() => setModalOpen(false)}
+        />
       </StyledPopup>
     </ListStyled>
   );

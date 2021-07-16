@@ -19,7 +19,7 @@ import {
 
 import type { TState } from "../../redux/store";
 
-import { infoContent } from "../../api/fakecontent";
+import { infoContent } from "../../api/content";
 
 type TMainPage = ConnectedProps<typeof connector>;
 

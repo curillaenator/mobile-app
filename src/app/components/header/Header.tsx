@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 
 import logo from "../../../assets/icons/logo.svg";
@@ -12,7 +13,7 @@ const HeaderStyled = styled.header`
   }
 `;
 
-export const Header = () => {
+export const Header: FC = () => {
   return (
     <HeaderStyled>
       <img className="logo" src={logo} alt="Logo" />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 
 import { Accordion } from "../accordion/Accordion";
@@ -6,7 +6,13 @@ import { Accordion } from "../accordion/Accordion";
 import { icons } from "../../../utils/icons";
 import { colors } from "../../../utils/colors";
 
-const ItemStyled = styled.div`
+import type { IFaq } from "../../../types/types";
+
+interface IItemStyled {
+  open: boolean;
+}
+
+const ItemStyled = styled.div<IItemStyled>`
   margin-bottom: 10px;
 
   .item {
@@ -59,7 +65,11 @@ const ItemStyled = styled.div`
   }
 `;
 
-export const FaqItem = ({ item }) => {
+interface IFaqitem {
+  item: IFaq;
+}
+
+export const FaqItem: FC<IFaqitem> = ({ item }) => {
   const [open, setOpen] = useState(false);
 
   return (

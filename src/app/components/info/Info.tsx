@@ -1,5 +1,8 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
+
+import type { TInfoContent } from "../../../api/content";
 
 const InfoStyled = styled.section`
   width: 100%;
@@ -50,7 +53,11 @@ const BulletStyled = styled.div`
   }
 `;
 
-export const Info = ({ content }) => {
+interface IInfo {
+  content: TInfoContent;
+}
+
+export const Info: FC<IInfo> = ({ content }) => {
   const { title, text, bullets } = content;
 
   return (
