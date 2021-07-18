@@ -22,8 +22,9 @@ const PopupStyled = styled(Popup)`
     align-items: center;
     padding: 16px;
     margin: 0;
+    width: 100%;
     max-width: 375px;
-    min-width: 375px;
+    min-width: 320px;
     height: 100vh;
     background-color: ${colors.backDark25};
   }

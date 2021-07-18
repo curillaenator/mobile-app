@@ -23,6 +23,10 @@ body {
   font-family: "Roboto Slab", serif;
 }
 
+.font_ptsans {
+  font-family: "PT Sans", sans-serif;
+}
+
 .rc-scrollbars-track-v {
   display: flex;
   justify-content: flex-end;

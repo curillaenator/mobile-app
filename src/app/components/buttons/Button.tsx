@@ -36,6 +36,10 @@ const ButtonStyled = styled.button<IButtonStyled>`
   &:active {
     background-color: ${colors.primaryPeachActive};
   }
+
+  @media (max-width: 375px) {
+    font-size: 14px;
+  }
 `;
 
 export interface IButton {

@@ -21,7 +21,7 @@ const ItemStyled = styled.div<IItemStyled>`
     justify-content: space-between;
     height: 48px;
     margin-bottom: ${({ open }) => (open ? "10px" : "0")};
-    padding: 0 13px 0 8px;
+    padding: 8px 13px 8px 8px;
     border-radius: 4px;
     background-color: ${({ open }) =>
       open ? colors.primaryPeach : colors.backWhite};

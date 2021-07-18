@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Button } from "../buttons/Button";
 import { Photo } from "../photo/Photo";
 import { ThumbV } from "../scrollbar/ThumbV";
+import { Pricer } from "../pricer/Pricer";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -255,6 +256,14 @@ const CardStyled = styled.div`
       line-height: 42px;
     }
   }
+
+  @media (max-width: 375px) {
+    .cta {
+      &_price {
+        font-size: 24px;
+      }
+    }
+  }
 `;
 
 // main component
@@ -352,7 +361,10 @@ export const Card: FC<ICardComp> = ({ card, handleOrder, openOrder }) => {
               <div className="body">
                 <h4 className="body_title">{option.title}</h4>
 
-                <div className="body_price font_roboto">{`от ${option.price} ₽`}</div>
+                <div className="body_price font_roboto">
+                  <span>от </span>
+                  <Pricer number={option.price} />
+                </div>
               </div>
 
               <div className="select">{icons.check}</div>
@@ -379,7 +391,7 @@ export const Card: FC<ICardComp> = ({ card, handleOrder, openOrder }) => {
 
       <div className="cta">
         <div className="cta_price font_roboto">
-          {+state.optPrice + state.rentPrice} ₽
+          <Pricer number={+state.optPrice + state.rentPrice} />
         </div>
 
         <Button title="Оставить заявку" handler={orderHandler} />

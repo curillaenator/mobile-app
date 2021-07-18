@@ -7,6 +7,7 @@ import { Button } from "../buttons/Button";
 import { ButtonSecondary } from "../buttons/ButtonSecondary";
 import { Dropdown } from "../dropdown/Dropdown";
 import { ThumbV } from "../scrollbar/ThumbV";
+import { Pricer } from "../pricer/Pricer";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -144,6 +145,9 @@ const OrderStyled = styled.section`
         font-weight: 700;
         font-size: 14px;
         line-height: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       &-sizes {
@@ -151,10 +155,15 @@ const OrderStyled = styled.section`
         font-weight: 500;
         font-size: 12px;
         line-height: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
     &_price {
+      flex-shrink: 0;
+      margin-left: 8px;
       font-style: normal;
       font-weight: 600;
       font-size: 14px;
@@ -188,6 +197,8 @@ const OrderStyled = styled.section`
       }
 
       &_price {
+        flex-shrink: 0;
+        margin-left: 8px;
         font-style: normal;
         font-weight: 600;
         font-size: 14px;
@@ -285,13 +296,16 @@ export const Order: FC<IOrder> = ({ order, closeOrder }) => {
       <div className="info">
         <div className="info_titles">
           <h4 className="info_titles-name">{order.title}</h4>
+
           <div className="info_titles-sizes">
             <span>Размер: </span>
             <span style={{ color: colors.fontGray }}>{order.size}</span>
           </div>
         </div>
 
-        <div className="info_price">{order.price} ₽</div>
+        <div className="info_price">
+          <Pricer number={order.price} />
+        </div>
       </div>
 
       <div className="rent">
@@ -308,14 +322,20 @@ export const Order: FC<IOrder> = ({ order, closeOrder }) => {
         {state.options.map((opt) => (
           <div className="option" key={opt.id}>
             <h4 className="option_title">{opt.title}</h4>
-            <div className="option_price">{opt.price} ₽</div>
+
+            <div className="option_price">
+              <Pricer number={opt.price} />
+            </div>
           </div>
         ))}
       </Scrollbars>
 
       <div className="price">
         <h4 className="price_title">Итого:</h4>
-        <div className="price_price font_roboto">{state.price} ₽</div>
+
+        <div className="price_price font_roboto">
+          <Pricer number={state.price} />
+        </div>
       </div>
 
       <div className="callme">
