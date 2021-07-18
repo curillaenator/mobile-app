@@ -25,12 +25,6 @@ const ButtonStyled = styled.button<IButtonStyled>`
   color: ${colors.primaryPeach};
   user-select: none;
 
-  &:hover {
-    background-color: ${colors.primaryPeach};
-    border: 2px solid ${colors.primaryPeach};
-    color: ${colors.fontWhite};
-  }
-
   &:active {
     background-color: ${colors.primaryPeachActive};
     border: 2px solid ${colors.primaryPeachActive};
