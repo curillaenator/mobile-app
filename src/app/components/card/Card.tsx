@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { Button } from "../buttons/Button";
 import { Photo } from "../photo/Photo";
+import { ThumbV } from "../scrollbar/ThumbV";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -78,7 +79,7 @@ const setRentPrice: TAction<number> = (payload) => ({
   payload,
 });
 
-// ---- BOOTH COMPONENT ----
+// ---- COMPONENT ----
 
 // css styled
 interface IOption {
@@ -256,14 +257,6 @@ const CardStyled = styled.div`
   }
 `;
 
-// sub components
-
-// @ts-ignore
-const optionsThumb = (props) => {
-  const thubmStyle = { ...props.style, backgroundColor: colors.primaryPeach };
-  return <div style={thubmStyle} {...props} />;
-};
-
 // main component
 interface ICardComp {
   card: ICard;
@@ -344,9 +337,9 @@ export const Card: FC<ICardComp> = ({ card, handleOrder, openOrder }) => {
         <h4 className="options_title">Доп. опции</h4>
 
         <Scrollbars
-          autoHide={true}
+          autoHide
           style={{ height: 152 }}
-          renderThumbVertical={optionsThumb}
+          renderThumbVertical={(props) => <ThumbV {...props} />}
         >
           {state.options.map((option, i) => (
             <OptionStyled

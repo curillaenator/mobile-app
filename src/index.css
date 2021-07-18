@@ -23,6 +23,11 @@ body {
   font-family: "Roboto Slab", serif;
 }
 
+.rc-scrollbars-track-v {
+  display: flex;
+  justify-content: flex-end;
+}
+
 input {
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;

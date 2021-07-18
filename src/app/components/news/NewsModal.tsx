@@ -5,6 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 
 import { Photo } from "../photo/Photo";
 import { ButtonIcon } from "../buttons/ButtonIcon";
+import { ThumbV } from "../scrollbar/ThumbV";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -93,7 +94,12 @@ export const NewsModal: FC<INewsModal> = ({ news, close }) => {
 
         <div className="content_title">{news.title}</div>
 
-        <Scrollbars autoHide style={{ height: 125 }}>
+        <Scrollbars
+          autoHide
+          autoHeight
+          autoHeightMax={125}
+          renderThumbVertical={(props) => <ThumbV {...props} />}
+        >
           {news.content}
         </Scrollbars>
       </div>

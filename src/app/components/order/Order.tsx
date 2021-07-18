@@ -1,10 +1,12 @@
 import { FC, useReducer, useEffect } from "react";
 import InputMask from "react-input-mask";
+import { Scrollbars } from "rc-scrollbars";
 import styled from "styled-components";
 
 import { Button } from "../buttons/Button";
 import { ButtonSecondary } from "../buttons/ButtonSecondary";
 import { Dropdown } from "../dropdown/Dropdown";
+import { ThumbV } from "../scrollbar/ThumbV";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -296,14 +298,20 @@ export const Order: FC<IOrder> = ({ order, closeOrder }) => {
         <Dropdown options={state.rent} handleChange={handleRent} />
       </div>
 
-      <div className="option_list">
+      <Scrollbars
+        autoHide
+        autoHeight
+        autoHeightMax={300}
+        classes={{ view: "option_list" }}
+        renderThumbVertical={(props) => <ThumbV {...props} />}
+      >
         {state.options.map((opt) => (
           <div className="option" key={opt.id}>
             <h4 className="option_title">{opt.title}</h4>
             <div className="option_price">{opt.price} ₽</div>
           </div>
         ))}
-      </div>
+      </Scrollbars>
 
       <div className="price">
         <h4 className="price_title">Итого:</h4>
