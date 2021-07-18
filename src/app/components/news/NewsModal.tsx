@@ -4,6 +4,7 @@ import { Scrollbars } from "rc-scrollbars";
 import { Carousel } from "react-responsive-carousel";
 
 import { Photo } from "../photo/Photo";
+import { ButtonIcon } from "../buttons/ButtonIcon";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -17,32 +18,9 @@ const ModalStyled = styled.div`
 
   .close {
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     top: -10px;
     right: -10px;
-    width: 40px;
-    height: 40px;
-    background-color: ${colors.backDark25};
-    cursor: pointer;
-    transition: 0.08s linear;
     z-index: 10;
-
-    & > svg {
-      width: 18px;
-      height: 18px;
-      fill: ${colors.fontWhite};
-      transition: 0.08s linear;
-    }
-
-    &:active {
-      background-color: ${colors.backDark50};
-
-      & > svg {
-        opacity: 1;
-      }
-    }
   }
 
   .content {
@@ -97,9 +75,9 @@ interface INewsModal {
 export const NewsModal: FC<INewsModal> = ({ news, close }) => {
   return (
     <ModalStyled>
-      <button className="close" onClick={close}>
-        {icons.close}
-      </button>
+      <div className="close">
+        <ButtonIcon icon={icons.close} background handler={close} />
+      </div>
 
       <Carousel showStatus={false} showThumbs={false} autoPlay={false}>
         {news.photoURL.map((url, i) => (
@@ -115,7 +93,7 @@ export const NewsModal: FC<INewsModal> = ({ news, close }) => {
 
         <div className="content_title">{news.title}</div>
 
-        <Scrollbars autoHide style={{ height: 84 }}>
+        <Scrollbars autoHide style={{ height: 125 }}>
           {news.content}
         </Scrollbars>
       </div>

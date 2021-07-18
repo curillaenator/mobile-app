@@ -3,6 +3,8 @@ import Popup from "reactjs-popup";
 import ReactPlayer from "react-player/youtube";
 import styled from "styled-components";
 
+import { ButtonIcon } from "../buttons/ButtonIcon";
+
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
 
@@ -13,44 +15,27 @@ const PopupStyled = styled(Popup)`
   &-overlay {
     padding: 0;
     margin: 0;
-    backdrop-filter: blur(4px);
-    transition: 0.08s linear;
   }
 
   &-content {
+    display: flex;
+    align-items: center;
     padding: 16px;
     margin: 0;
     max-width: 375px;
     min-width: 375px;
-    border-radius: 8px;
-    border: 2px solid ${colors.primaryPeach};
-    background-color: ${colors.backWhite};
+    height: 100vh;
+    background-color: ${colors.backDark25};
   }
 `;
 
 const VideoModal = styled.div`
+  width: 100%;
+
   .head {
     display: flex;
     flex-direction: row-reverse;
     margin-bottom: 16px;
-
-    &_button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-
-      & > svg {
-        width: 24px;
-        height: 24px;
-
-        & > path {
-          fill: ${colors.fontDark};
-        }
-      }
-    }
   }
 `;
 
@@ -158,7 +143,7 @@ export const Video: FC<IVideo> = ({ videoURL }) => {
         <PopupStyled
           arrow={false}
           modal
-          // lockScroll
+          lockScroll
           trigger={() => (
             <div className="frame_video">
               <img className="frame_video-cover" src={frame} alt="" />
@@ -169,9 +154,7 @@ export const Video: FC<IVideo> = ({ videoURL }) => {
           {(close: () => void) => (
             <VideoModal>
               <div className="head">
-                <button className="head_button" onClick={close}>
-                  {icons.close}
-                </button>
+                <ButtonIcon icon={icons.close} handler={close} />
               </div>
 
               <ReactPlayer url={videoURL} controls={true} width="100%" />

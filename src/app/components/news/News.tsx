@@ -68,6 +68,10 @@ const NewsStyled = styled.section`
 
     &_content {
       margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     &_date {

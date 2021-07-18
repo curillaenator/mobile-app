@@ -117,12 +117,12 @@ const OrderStyled = styled.section`
       cursor: pointer;
       transition: 0.08s linear;
 
-      &:hover {
-        transform: scale(1.2);
+      & > svg {
+        fill: ${colors.fontGray};
       }
 
       &:active {
-        transform: scale(1);
+        transform: scale(1.2);
       }
     }
   }
