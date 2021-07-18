@@ -2,6 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { colors } from "../../../utils/colors";
+import { icons } from "../../../utils/icons";
 
 import type { INews } from "../../../types/types";
 
@@ -15,9 +16,15 @@ const contentText = () => `
 const NewsStyled = styled.section`
   margin-bottom: 20px;
   background-color: ${colors.backLightGray};
+  cursor: pointer;
+  transition: 0.08s linear;
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &:active {
+    opacity: 0.5;
   }
 
   .photo {
@@ -33,6 +40,12 @@ const NewsStyled = styled.section`
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    & > svg {
+      position: absolute;
+      bottom: 0;
+      left: 10px;
     }
   }
 
@@ -65,13 +78,15 @@ const NewsStyled = styled.section`
 
 interface INewsComp {
   news: INews;
+  setModalOpen: () => void;
 }
 
-export const News: FC<INewsComp> = ({ news }) => {
+export const News: FC<INewsComp> = ({ news, setModalOpen }) => {
   return (
-    <NewsStyled>
+    <NewsStyled onClick={setModalOpen}>
       <div className="photo">
-        <img className="photo_img" src={news.photoURL} alt={news.id} />
+        <img className="photo_img" src={news.photoURL[0]} alt={news.id} />
+        {icons.triangle}
       </div>
 
       <div className="content">

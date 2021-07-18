@@ -28,7 +28,7 @@ export const icons = {
     >
       <path
         d="M1.71875 0.28125L0.28125 1.71875L7.5625 9L0.28125 16.2812L1.71875 17.7188L9 10.4375L16.2812 17.7188L17.7188 16.2812L10.4375 9L17.7188 1.71875L16.2812 0.28125L9 7.5625L1.71875 0.28125Z"
-        fill="#6A6A6A"
+        // fill="#6A6A6A"
       />
     </svg>
   ),
@@ -63,6 +63,17 @@ export const icons = {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  ),
+  triangle: (
+    <svg
+      width="36"
+      height="30"
+      viewBox="0 0 36 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M18 0L35.3205 30H0.679491L18 0Z" fill="#FAFAFA" />
     </svg>
   ),
 };

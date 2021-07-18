@@ -4,7 +4,8 @@ import newsPhoto from "../assets/images/newsPhoto.jpg";
 
 import type { ICard, INews, IFaq } from "../types/types";
 
-const photos: string[] = [photo, photo, photo, photo, photo];
+const photos: string[] = [photo, newsPhoto, photo, photo2, photo];
+const newsPhotos: string[] = [newsPhoto, photo, newsPhoto, photo2, newsPhoto];
 
 const rentNames = [
   "1 час",
@@ -46,7 +47,7 @@ const newsList = new Array(20).fill(1).map((_, i) => ({
   id: `news${i}`,
   title: `Фотобудки, GIF стойка ${i}`,
   type: "Услуги",
-  photoURL: newsPhoto,
+  photoURL: newsPhotos,
   content: "У нас есть широчайший ассортимент фотобудок на все случаи жизни",
   date: "20 Марта 2021",
 }));

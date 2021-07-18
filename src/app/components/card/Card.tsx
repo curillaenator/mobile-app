@@ -4,6 +4,7 @@ import { Scrollbars } from "rc-scrollbars";
 import styled from "styled-components";
 
 import { Button } from "../buttons/Button";
+import { Photo } from "../photo/Photo";
 
 import { colors } from "../../../utils/colors";
 import { icons } from "../../../utils/icons";
@@ -318,9 +319,14 @@ export const Card: FC<ICardComp> = ({ card, handleOrder, openOrder }) => {
   return (
     <CardStyled>
       <div className="carousel">
-        <Carousel showStatus={false} showThumbs={false} autoPlay={false}>
-          {card.photos.map((photo, i) => (
-            <img src={photo} alt="" key={i} />
+        <Carousel
+          showStatus={false}
+          showThumbs={false}
+          autoPlay={false}
+          dynamicHeight
+        >
+          {card.photos.map((url, i) => (
+            <Photo url={url} key={i} ratio={0.75} />
           ))}
         </Carousel>
       </div>

@@ -37,7 +37,7 @@ export interface INews {
   id: string;
   title: string;
   type: string;
-  photoURL: string;
+  photoURL: string[];
   content: string;
   date: string;
 }
