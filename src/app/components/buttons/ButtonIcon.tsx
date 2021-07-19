@@ -32,8 +32,8 @@ const BtnStyled = styled.button<IBtnStyled>`
 
 interface IButtonIcon {
   icon: ReactNode;
-  handler: () => void;
   background?: boolean;
+  handler: () => void;
 }
 
 export const ButtonIcon: FC<IButtonIcon> = ({
@@ -42,7 +42,7 @@ export const ButtonIcon: FC<IButtonIcon> = ({
   handler,
 }) => {
   return (
-    <BtnStyled onClick={handler} background={background}>
+    <BtnStyled onClick={handler} background={background} role="button">
       {icon}
     </BtnStyled>
   );

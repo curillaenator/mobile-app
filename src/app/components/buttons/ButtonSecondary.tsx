@@ -41,11 +41,12 @@ export const ButtonSecondary: FC<IButton> = ({
 }) => {
   return (
     <ButtonStyled
-      onClick={handler}
       fullwidth={fullwidth}
       height={height}
       active={active}
       disabled={disabled}
+      role="button"
+      onClick={handler}
     >
       {title}
     </ButtonStyled>

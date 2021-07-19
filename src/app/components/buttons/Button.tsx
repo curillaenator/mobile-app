@@ -65,6 +65,7 @@ export const Button: FC<IButton> = ({
       height={height}
       active={active}
       disabled={disabled}
+      role="button"
       onClick={handler}
     >
       {title}

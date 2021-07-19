@@ -47,6 +47,7 @@ export const ButtonOutline: FC<IButton> = ({
       active={active}
       disabled={disabled}
       onClick={handler}
+      role="button"
     >
       {title}
     </ButtonStyled>

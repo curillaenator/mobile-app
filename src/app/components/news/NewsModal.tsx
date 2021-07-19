@@ -69,11 +69,14 @@ const ModalStyled = styled.div`
 `;
 
 interface INewsModal {
-  news: INews;
+  news: INews | null;
   close: () => void;
 }
 
 export const NewsModal: FC<INewsModal> = ({ news, close }) => {
+  if (!news) close();
+  if (!news) return null;
+
   return (
     <ModalStyled>
       <div className="close">
